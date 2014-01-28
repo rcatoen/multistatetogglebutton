@@ -70,8 +70,6 @@ public class MultiStateToggleButton extends ToggleButton {
         	mainLayout.addView(b);
         	this.buttons.add(b);
         }
-        
-        // The background drawable must be set after rendering the buttons
         mainLayout.setBackgroundResource(R.drawable.button_section_shape);
     }
     
