@@ -1,4 +1,0 @@
-INDEX VERSION 1.126+/Users/joseluishonorato/Documents/Eclipse/workspace_toggle_button/.metadata/.plugins/org.eclipse.jdt.core
-3581993513.index
-1000272591.index
-3317297232.index
