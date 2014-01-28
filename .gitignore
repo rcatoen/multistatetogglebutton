@@ -36,8 +36,6 @@ libs/android-support-v7-appcompat.jar
 libs/Parse-1.3.5-javadoc/
 version.txt
 
-truckid.keystore
-
 config.txt
 props.txt
 build.gradle
@@ -56,6 +54,7 @@ puticon.sh
 .metadata
 .gradle
 bin/
+!MultiStateToggleButton/bin/multistatetogglebutton.jar
 tmp/
 *.tmp
 *.bak
