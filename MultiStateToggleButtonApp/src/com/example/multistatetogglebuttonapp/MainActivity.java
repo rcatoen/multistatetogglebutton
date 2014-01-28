@@ -1,5 +1,6 @@
 package com.example.multistatetogglebuttonapp;
 
+import org.honorato.multistatetogglebutton.MultiStateToggleButton;
 import org.honorato.multistatetogglebutton.ThreeStateToggleButton;
 import org.honorato.multistatetogglebutton.ToggleButton;
 
@@ -16,14 +17,24 @@ public class MainActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		
+
 		ThreeStateToggleButton button = (ThreeStateToggleButton) this.findViewById(R.id.mstb_main_id);
 		button.setOnValueChangedListener(new ToggleButton.OnValueChangedListener() {
-			
+
 			@Override
 			public void onValueChanged(int value) {
 				Log.d(TAG, "Value: " + value);
-				
+
+			}
+		});
+
+		MultiStateToggleButton button2 = (MultiStateToggleButton) this.findViewById(R.id.mstb_multi_id);
+		button2.setOnValueChangedListener(new ToggleButton.OnValueChangedListener() {
+
+			@Override
+			public void onValueChanged(int value) {
+				Log.d(TAG, "Value: " + value);
+
 			}
 		});
 	}
