@@ -55,6 +55,7 @@ puticon.sh
 .gradle
 bin/
 !MultiStateToggleButton/bin/multistatetogglebutton.jar
+MultiStateJar/
 tmp/
 *.tmp
 *.bak
