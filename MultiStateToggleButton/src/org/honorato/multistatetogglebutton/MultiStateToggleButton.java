@@ -28,7 +28,6 @@ public class MultiStateToggleButton extends ToggleButton {
 	public MultiStateToggleButton(Context context, AttributeSet attrs)
 	{
 		super(context, attrs);
-
 		int[] set = {
 				android.R.attr.entries
 		};
@@ -36,18 +35,23 @@ public class MultiStateToggleButton extends ToggleButton {
 		CharSequence[] texts = a.getTextArray(0);
 		a.recycle();
 
+		setElements(texts);
+	}
+	
+	public void setElements(CharSequence[] texts) {
+		// TODO: Add an exception
+		if(texts == null || texts.length < 2) {
+			Log.d(TAG, "Minimum quantity: 2");
+			return;
+		}
+
 		setOrientation(LinearLayout.HORIZONTAL);
 		setGravity(Gravity.CENTER_VERTICAL);
 
 		LayoutInflater inflater = (LayoutInflater) context
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		LinearLayout mainLayout = (LinearLayout) inflater.inflate(R.layout.view_multi_state_toggle_button, this, true);
-
-		// TODO: Add an exception
-		if(texts == null || texts.length < 2) {
-			Log.d(TAG, "Minimum quantity: 2");
-			return;
-		}
+		mainLayout.removeAllViews();
 
 		this.buttons = new ArrayList<Button>();
 		for(int i = 0; i < texts.length; i++) {
@@ -74,7 +78,15 @@ public class MultiStateToggleButton extends ToggleButton {
 		}
 		mainLayout.setBackgroundResource(R.drawable.button_section_shape);
 	}
+	
+	public void setElements(List<String> texts) {
+		setElements(texts.toArray(new String[texts.size()]));
+	}
 
+	public void setElements(int arrayResourceId) {
+		setElements(this.getResources().getStringArray(arrayResourceId));
+	}
+	
 	public void setButtonState(Button button, boolean selected) {
 		if(button == null) {
 			return;

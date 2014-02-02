@@ -29,6 +29,7 @@ public class MainActivity extends Activity {
 		});
 
 		MultiStateToggleButton button2 = (MultiStateToggleButton) this.findViewById(R.id.mstb_multi_id);
+		button2.setElements(R.array.dogs_array);
 		button2.setOnValueChangedListener(new ToggleButton.OnValueChangedListener() {
 
 			@Override
