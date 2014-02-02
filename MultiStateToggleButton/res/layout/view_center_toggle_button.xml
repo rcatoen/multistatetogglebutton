@@ -8,5 +8,6 @@
     android:layout_weight="1"
     android:background="@drawable/button_states"
     android:minHeight="7dip"
-    android:padding="0dip"
+    android:paddingLeft="2dip"
+    android:paddingRight="2dip"
     android:text="2" />
