@@ -50,3 +50,16 @@ Be sure to declare an array of strings called `planets_array` in your `strings.x
 	<item>Mars</item>
 </string-array>
 ```
+
+The values can also be specified programmatically:
+
+```
+MultiStateToggleButton button = (MultiStateToggleButton) this.findViewById(R.id.mstb_multi_id);
+
+// With an array
+CharSequence[] texts = new CharSequence[]{"abc", "def"};
+button.setElements(texts);
+
+// With a resource id
+button.setElements(R.array.planets_array);
+```
