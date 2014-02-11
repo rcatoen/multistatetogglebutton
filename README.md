@@ -11,7 +11,7 @@ To use this library you need to clone this repo to your workspace and add the `M
 
 Then in your activity's XML declare:
 
-```
+```xml
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -30,7 +30,7 @@ Then in your activity's XML declare:
 
 If you need a callback for when the value changes then add this to your code:
 
-```
+```java
 MultiStateToggleButton button2 = (MultiStateToggleButton) this.findViewById(R.id.mstb_multi_id);
 button2.setOnValueChangedListener(new ToggleButton.OnValueChangedListener() {
 	@Override
@@ -42,7 +42,7 @@ button2.setOnValueChangedListener(new ToggleButton.OnValueChangedListener() {
 
 Be sure to declare an array of strings called `planets_array` in your `strings.xml`:
 
-```
+```xml
 <string-array name="planets_array">
 	<item>Mer</item>
 	<item>Venus</item>
@@ -53,7 +53,7 @@ Be sure to declare an array of strings called `planets_array` in your `strings.x
 
 The values can also be specified programmatically:
 
-```
+```java
 MultiStateToggleButton button = (MultiStateToggleButton) this.findViewById(R.id.mstb_multi_id);
 
 // With an array
