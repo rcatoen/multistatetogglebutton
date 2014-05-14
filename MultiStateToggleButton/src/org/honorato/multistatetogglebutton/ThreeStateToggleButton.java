@@ -22,11 +22,17 @@ public class ThreeStateToggleButton extends ToggleButton {
 	
 	public ThreeStateToggleButton(Context context) {
 		super(context, null);
+		if (this.isInEditMode()) {
+			return;
+		}
 	}
 	
     public ThreeStateToggleButton(Context context, AttributeSet attrs)
     {
         super(context, attrs);
+		if (this.isInEditMode()) {
+			return;
+		}
         
         TypedArray a = context.obtainStyledAttributes(attrs,
         		R.styleable.ThreeStateToggleButton, 0, 0);

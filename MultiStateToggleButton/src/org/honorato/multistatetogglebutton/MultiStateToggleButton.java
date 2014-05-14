@@ -23,11 +23,17 @@ public class MultiStateToggleButton extends ToggleButton {
 
 	public MultiStateToggleButton(Context context) {
 		super(context, null);
+		if (this.isInEditMode()) {
+			return;
+		}
 	}
 
 	public MultiStateToggleButton(Context context, AttributeSet attrs)
 	{
 		super(context, attrs);
+		if (this.isInEditMode()) {
+			return;
+		}
 		int[] set = {
 				android.R.attr.entries
 		};
