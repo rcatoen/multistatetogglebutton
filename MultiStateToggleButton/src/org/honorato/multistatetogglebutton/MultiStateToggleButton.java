@@ -20,6 +20,7 @@ public class MultiStateToggleButton extends ToggleButton {
 
 	private static final String TAG = "MultiStateToggleButton";
 	List<Button> buttons;
+	boolean mMultipleChoice = false;
 
 	public MultiStateToggleButton(Context context) {
 		super(context, null);
@@ -41,14 +42,24 @@ public class MultiStateToggleButton extends ToggleButton {
 		CharSequence[] texts = a.getTextArray(0);
 		a.recycle();
 
-		setElements(texts);
+		setElements(texts, new boolean[texts.length]);
 	}
-	
-	public void setElements(CharSequence[] texts) {
+
+	public void enableMultipleChoice(boolean enable) {
+		this.mMultipleChoice = enable;
+	}
+
+	public void setElements(CharSequence[] texts, boolean[] selected) {
 		// TODO: Add an exception
-		if(texts == null || texts.length < 2) {
+		if (texts == null || texts.length < 2) {
 			Log.d(TAG, "Minimum quantity: 2");
 			return;
+		}
+
+		boolean enableDefaultSelection = true;
+		if (selected == null || texts.length != selected.length) {
+			Log.d(TAG, "Invalid selection array");
+			enableDefaultSelection = false;
 		}
 
 		setOrientation(LinearLayout.HORIZONTAL);
@@ -60,11 +71,11 @@ public class MultiStateToggleButton extends ToggleButton {
 		mainLayout.removeAllViews();
 
 		this.buttons = new ArrayList<Button>();
-		for(int i = 0; i < texts.length; i++) {
+		for (int i = 0; i < texts.length; i++) {
 			Button b = null;
-			if(i == 0) {
+			if (i == 0) {
 				b = (Button) inflater.inflate(R.layout.view_left_toggle_button, mainLayout, false);
-			} else if(i == texts.length - 1) {
+			} else if (i == texts.length - 1) {
 				b = (Button) inflater.inflate(R.layout.view_right_toggle_button, mainLayout, false);
 			} else {
 				b = (Button) inflater.inflate(R.layout.view_center_toggle_button, mainLayout, false);
@@ -80,25 +91,68 @@ public class MultiStateToggleButton extends ToggleButton {
 
 			});
 			mainLayout.addView(b);
+			if (enableDefaultSelection) {
+				b.setSelected(selected[i]);
+			}
 			this.buttons.add(b);
 		}
 		mainLayout.setBackgroundResource(R.drawable.button_section_shape);
 	}
-	
-	public void setElements(List<String> texts) {
-		setElements(texts.toArray(new String[texts.size()]));
+
+	public void setElements(CharSequence[] elements) {
+		int size = elements == null ? 0 : elements.length;
+		setElements(elements, new boolean[size]);
 	}
 
-	public void setElements(int arrayResourceId) {
-		setElements(this.getResources().getStringArray(arrayResourceId));
+	public void setElements(List<?> elements) {
+		int size = elements == null ? 0 : elements.size();
+		setElements(elements, new boolean[size]);
 	}
-	
+
+	public void setElements(List<?> elements, Object selected) {
+		int size = 0;
+		int index = -1;
+		if (elements != null) {
+			size = elements.size();
+			index = elements.indexOf(selected);
+		}
+		boolean[] selectedArray = new boolean[size];
+		if (index != -1 && index < size) {
+			selectedArray[index] = true;
+		}
+		setElements(elements, new boolean[size]);
+	}
+
+	public void setElements(List<?> texts, boolean[] selected) {
+		int size = texts == null ? 0 : texts.size();
+		setElements(texts.toArray(new String[size]), selected);
+	}
+
+	public void setElements(int arrayResourceId, int selectedPosition) {
+		// Get resources
+		String[] elements = this.getResources().getStringArray(arrayResourceId);
+
+		// Set selected boolean array
+		int size = elements == null ? 0 : elements.length;
+		boolean[] selected = new boolean[size];
+		if (selectedPosition >= 0 && selectedPosition < size) {
+			selected[selectedPosition] = true;
+		}
+
+		// Super
+		setElements(elements, selected);
+	}
+
+	public void setElements(int arrayResourceId, boolean[] selected) {
+		setElements(this.getResources().getStringArray(arrayResourceId), selected);
+	}
+
 	public void setButtonState(Button button, boolean selected) {
-		if(button == null) {
+		if (button == null) {
 			return;
 		}
 		button.setSelected(selected);
-		if(selected) {
+		if (selected) {
 			button.setBackgroundResource(R.drawable.button_pressed);
 			button.setTextAppearance(this.context, R.style.WhiteBoldText);
 		} else {
@@ -108,26 +162,32 @@ public class MultiStateToggleButton extends ToggleButton {
 	}
 
 	public int getValue() {
-		for(int i = 0; i < this.buttons.size(); i++) {
-			if(buttons.get(i).isSelected()) {
+		for (int i = 0; i < this.buttons.size(); i++) {
+			if (buttons.get(i).isSelected()) {
 				return i;
 			}
 		}
 		return -1;
 	}
 
-	public void setValue(int state) {
-
-		for(int i = 0; i < this.buttons.size(); i++) {
-			if(i == state) {
-				setButtonState(buttons.get(i), true);
+	public void setValue(int position) {
+		for (int i = 0; i < this.buttons.size(); i++) {
+			if (mMultipleChoice) {
+				if (i == position) {
+					Button b = buttons.get(i);
+					if (b != null) {
+						setButtonState(b, !b.isSelected());
+					}
+					break;
+				}
 			} else {
-				setButtonState(buttons.get(i), false);
-
+				if (i == position) {
+					setButtonState(buttons.get(i), true);
+				} else if (!mMultipleChoice) {
+					setButtonState(buttons.get(i), false);
+				}
 			}
+			super.setValue(position);
 		}
-		super.setValue(state);
 	}
-
-
 }
