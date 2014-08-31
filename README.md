@@ -34,8 +34,8 @@ If you need a callback for when the value changes then add this to your code:
 MultiStateToggleButton button2 = (MultiStateToggleButton) this.findViewById(R.id.mstb_multi_id);
 button2.setOnValueChangedListener(new ToggleButton.OnValueChangedListener() {
 	@Override
-	public void onValueChanged(int value) {
-		Log.d(TAG, "Value: " + value);
+	public void onValueChanged(int position) {
+		Log.d(TAG, "Position: " + position);
 	}
 });
 ```
@@ -51,7 +51,7 @@ Be sure to declare an array of strings called `planets_array` in your `strings.x
 </string-array>
 ```
 
-The values can also be specified programmatically:
+The values can also be specified programmatically, plus other options:
 
 ```java
 MultiStateToggleButton button = (MultiStateToggleButton) this.findViewById(R.id.mstb_multi_id);
@@ -62,4 +62,10 @@ button.setElements(texts);
 
 // With a resource id
 button.setElements(R.array.planets_array);
+
+// Resource id, position one is selected by default
+button.setElements(R.array.dogs_array, 1);
+		
+// Multiple elements can be selected simultaneously
+button.enableMultipleChoice(true);
 ```
