@@ -6,6 +6,8 @@ import java.util.List;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.os.Bundle;
+import android.os.Parcelable;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.Gravity;
@@ -19,6 +21,8 @@ import com.example.multistatetogglebutton.R;
 public class MultiStateToggleButton extends ToggleButton {
 
 	private static final String TAG = "MultiStateToggleButton";
+	private static final String KEY_BUTTON_STATES = "button_states";
+	private static final String KEY_INSTANCE_STATE = "instance_state";
 	List<Button> buttons;
 	boolean mMultipleChoice = false;
 
@@ -49,7 +53,29 @@ public class MultiStateToggleButton extends ToggleButton {
 		this.mMultipleChoice = enable;
 	}
 
+	@Override
+	public Parcelable onSaveInstanceState() {
+		Log.d(TAG, "Saving");
+		Bundle bundle = new Bundle();
+		bundle.putParcelable(KEY_INSTANCE_STATE, super.onSaveInstanceState());
+		bundle.putBooleanArray(KEY_BUTTON_STATES, getStates());
+		return bundle;
+	}
+
+	@Override
+	public void onRestoreInstanceState(Parcelable state) {
+		Log.d(TAG, "Restoring");
+		if (state instanceof Bundle) {
+			Log.d(TAG, "Enter");
+			Bundle bundle = (Bundle) state;
+			setStates(bundle.getBooleanArray(KEY_BUTTON_STATES));
+			state = bundle.getParcelable(KEY_INSTANCE_STATE);
+		}
+		super.onRestoreInstanceState(state);
+	}
+
 	public void setElements(CharSequence[] texts, boolean[] selected) {
+		Log.d(TAG, "Setting elements");
 		// TODO: Add an exception
 		if (texts == null || texts.length < 2) {
 			Log.d(TAG, "Minimum quantity: 2");
@@ -178,7 +204,6 @@ public class MultiStateToggleButton extends ToggleButton {
 					if (b != null) {
 						setButtonState(b, !b.isSelected());
 					}
-					break;
 				}
 			} else {
 				if (i == position) {
@@ -187,7 +212,30 @@ public class MultiStateToggleButton extends ToggleButton {
 					setButtonState(buttons.get(i), false);
 				}
 			}
-			super.setValue(position);
+		}
+		super.setValue(position);
+	}
+	
+	public boolean[] getStates() {
+		int size = this.buttons == null ? 0 : this.buttons.size();
+		boolean[] result = new boolean[size];
+		for (int i = 0; i < size; i++) {
+			result[i] = this.buttons.get(i).isSelected();
+			Log.d(TAG, "get: " + result[i]);
+		}
+		return result;
+	}
+	
+	public void setStates(boolean[] selected) {
+		if (this.buttons == null || selected == null || 
+				this.buttons.size() != selected.length) {
+			return;
+		}
+		int count = 0;
+		for (Button b : this.buttons) {
+			Log.d(TAG, "set: " + selected[count]);
+			setButtonState(b, selected[count]);
+			count++;
 		}
 	}
 }
