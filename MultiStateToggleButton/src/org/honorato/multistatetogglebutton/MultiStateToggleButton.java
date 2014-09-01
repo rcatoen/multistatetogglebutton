@@ -20,9 +20,11 @@ import com.example.multistatetogglebutton.R;
 
 public class MultiStateToggleButton extends ToggleButton {
 
-	private static final String TAG = "MultiStateToggleButton";
+	private static final String TAG = MultiStateToggleButton.class.getSimpleName();
+	
 	private static final String KEY_BUTTON_STATES = "button_states";
 	private static final String KEY_INSTANCE_STATE = "instance_state";
+	
 	List<Button> buttons;
 	boolean mMultipleChoice = false;
 
@@ -64,9 +66,7 @@ public class MultiStateToggleButton extends ToggleButton {
 
 	@Override
 	public void onRestoreInstanceState(Parcelable state) {
-		Log.d(TAG, "Restoring");
 		if (state instanceof Bundle) {
-			Log.d(TAG, "Enter");
 			Bundle bundle = (Bundle) state;
 			setStates(bundle.getBooleanArray(KEY_BUTTON_STATES));
 			state = bundle.getParcelable(KEY_INSTANCE_STATE);
@@ -75,7 +75,6 @@ public class MultiStateToggleButton extends ToggleButton {
 	}
 
 	public void setElements(CharSequence[] texts, boolean[] selected) {
-		Log.d(TAG, "Setting elements");
 		// TODO: Add an exception
 		if (texts == null || texts.length < 2) {
 			Log.d(TAG, "Minimum quantity: 2");
@@ -118,7 +117,7 @@ public class MultiStateToggleButton extends ToggleButton {
 			});
 			mainLayout.addView(b);
 			if (enableDefaultSelection) {
-				b.setSelected(selected[i]);
+				setButtonState(b, selected[i]);
 			}
 			this.buttons.add(b);
 		}
@@ -221,7 +220,6 @@ public class MultiStateToggleButton extends ToggleButton {
 		boolean[] result = new boolean[size];
 		for (int i = 0; i < size; i++) {
 			result[i] = this.buttons.get(i).isSelected();
-			Log.d(TAG, "get: " + result[i]);
 		}
 		return result;
 	}
@@ -233,7 +231,6 @@ public class MultiStateToggleButton extends ToggleButton {
 		}
 		int count = 0;
 		for (Button b : this.buttons) {
-			Log.d(TAG, "set: " + selected[count]);
 			setButtonState(b, selected[count]);
 			count++;
 		}
