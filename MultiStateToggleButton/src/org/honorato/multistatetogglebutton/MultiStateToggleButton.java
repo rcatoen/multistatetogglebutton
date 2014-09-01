@@ -51,13 +51,17 @@ public class MultiStateToggleButton extends ToggleButton {
 		setElements(texts, new boolean[texts.length]);
 	}
 
+	/**
+	 * If multiple choice is enabled, the user can select multiple
+	 * values simultaneously.
+	 * @param enable
+	 */
 	public void enableMultipleChoice(boolean enable) {
 		this.mMultipleChoice = enable;
 	}
 
 	@Override
 	public Parcelable onSaveInstanceState() {
-		Log.d(TAG, "Saving");
 		Bundle bundle = new Bundle();
 		bundle.putParcelable(KEY_INSTANCE_STATE, super.onSaveInstanceState());
 		bundle.putBooleanArray(KEY_BUTTON_STATES, getStates());
@@ -74,10 +78,18 @@ public class MultiStateToggleButton extends ToggleButton {
 		super.onRestoreInstanceState(state);
 	}
 
+	/**
+	 * Set multiple buttons with the specified texts and default
+	 * initial values. Initial states are allowed, but both
+	 * arrays must be of the same size.
+	 * 
+	 * @param texts An array of CharSequences for the buttons
+	 * @param selected The default value for the buttons
+	 */
 	public void setElements(CharSequence[] texts, boolean[] selected) {
 		// TODO: Add an exception
-		if (texts == null || texts.length < 2) {
-			Log.d(TAG, "Minimum quantity: 2");
+		if (texts == null || texts.length < 1) {
+			Log.d(TAG, "Minimum quantity: 1");
 			return;
 		}
 
@@ -99,7 +111,12 @@ public class MultiStateToggleButton extends ToggleButton {
 		for (int i = 0; i < texts.length; i++) {
 			Button b = null;
 			if (i == 0) {
-				b = (Button) inflater.inflate(R.layout.view_left_toggle_button, mainLayout, false);
+				// Add a special view when there's only one element
+				if (texts.length == 1) {
+					b = (Button) inflater.inflate(R.layout.view_single_toggle_button, mainLayout, false);
+				} else {
+					b = (Button) inflater.inflate(R.layout.view_left_toggle_button, mainLayout, false);
+				}
 			} else if (i == texts.length - 1) {
 				b = (Button) inflater.inflate(R.layout.view_right_toggle_button, mainLayout, false);
 			} else {
