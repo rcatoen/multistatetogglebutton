@@ -6,18 +6,11 @@
     <string name="hello_world">Hello world!</string>
 
     <string-array name="planets_array">
-        <item>Mer</item>
-        <item>Venus</item>
-        <item>Earth</item>
-        <item>Mars</item>
-    </string-array>
-    
-    <string-array name="dogs_array">
-        <item>Collie</item>
-        <item>Pug</item>
-        <item>Poodle</item>
-        <item>Rottweiler</item>
-        <item>Golden</item>
+        <item>Finn</item>
+        <item>Jake</item>
+        <item>BMO</item>
+        <item>Ice King</item>
+        <item>PB</item>
     </string-array>
 
 </resources>

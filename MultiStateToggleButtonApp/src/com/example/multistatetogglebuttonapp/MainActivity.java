@@ -1,7 +1,6 @@
 package com.example.multistatetogglebuttonapp;
 
 import org.honorato.multistatetogglebutton.MultiStateToggleButton;
-import org.honorato.multistatetogglebutton.ThreeStateToggleButton;
 import org.honorato.multistatetogglebutton.ToggleButton;
 
 import android.app.Activity;
@@ -18,26 +17,8 @@ public class MainActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
-		ThreeStateToggleButton button = (ThreeStateToggleButton) this.findViewById(R.id.mstb_main_id);
+		MultiStateToggleButton button = (MultiStateToggleButton) this.findViewById(R.id.mstb_multi_id);
 		button.setOnValueChangedListener(new ToggleButton.OnValueChangedListener() {
-
-			@Override
-			public void onValueChanged(int position) {
-				Log.d(TAG, "Position: " + position);
-
-			}
-		});
-
-		MultiStateToggleButton button2 = (MultiStateToggleButton) this.findViewById(R.id.mstb_multi_id);
-
-		// Position one is selected by default
-		button2.setElements(R.array.dogs_array, 1);
-		
-		// Multiple elements can be selected simultaneously
-		button2.enableMultipleChoice(true);
-		
-		// Set callback
-		button2.setOnValueChangedListener(new ToggleButton.OnValueChangedListener() {
 
 			@Override
 			public void onValueChanged(int position) {
