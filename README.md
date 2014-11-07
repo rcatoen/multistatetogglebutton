@@ -1,7 +1,9 @@
 Multi State Toggle Button
 =========================
 
-A simple multi-state toggle button for Android.
+A simple multi-state toggle button for Android forked from jhonora.
+
+I have updated the appearance to match more of a google material design look.
 
 ![Example](img/example1.png)
 
@@ -20,10 +22,9 @@ Then in your activity's XML declare:
 
 	<org.honorato.multistatetogglebutton.MultiStateToggleButton
 		android:id="@+id/mstb_multi_id"
-		android:layout_width="wrap_content"
+		android:layout_width="match_content"
 		android:layout_height="wrap_content"
-		android:layout_marginTop="10dip"
-		android:entries="@array/planets_array" />
+		android:entries="@array/adventuretime_array" />
 
 </LinearLayout>
 ```
@@ -40,15 +41,16 @@ button2.setOnValueChangedListener(new ToggleButton.OnValueChangedListener() {
 });
 ```
 
-Be sure to declare an array of strings called `planets_array` in your `strings.xml`:
+Be sure to declare an array of strings called `adventuretime_array` in your `strings.xml`:
 
 ```xml
-<string-array name="planets_array">
-	<item>Mer</item>
-	<item>Venus</item>
-	<item>Earth</item>
-	<item>Mars</item>
-</string-array>
+<string-array name="adventuretime_array">
+        <item>Finn</item>
+        <item>Jake</item>
+        <item>BMO</item>
+        <item>Ice King</item>
+        <item>PB</item>
+    </string-array>
 ```
 
 The values can also be specified programmatically, plus other options:
